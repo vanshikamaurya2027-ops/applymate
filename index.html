@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ApplyMate – Your AI college-application copilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F7FB;--surface:#fff;--ink:#12203B;--muted:#55627A;--line:#D8E0EC;--brand:#2A3FD6;--brand-ink:#fff;--hl:#FFD84D;--ok:#12806F;--reach:#E0533D;--target:#2A3FD6;--safe:#12806F;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1526;--surface:#16213A;--ink:#EEF2FA;--muted:#A5B1C8;--line:#2A3858;--brand:#7F8CFF;--brand-ink:#0D1526;--ok:#4FD1B8;--reach:#FF8A76;--target:#7F8CFF;--safe:#4FD1B8}}
+:root[data-theme="dark"]{--bg:#0D1526;--surface:#16213A;--ink:#EEF2FA;--muted:#A5B1C8;--line:#2A3858;--brand:#7F8CFF;--brand-ink:#0D1526;--ok:#4FD1B8;--reach:#FF8A76;--target:#7F8CFF;--safe:#4FD1B8}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Figtree,system-ui,-apple-system,Segoe UI,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;line-height:1.08;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800}
+h2{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:800}
+h3{font-size:1.25rem;font-weight:600;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+.hl{background:linear-gradient(transparent 58%,var(--hl) 58% 92%,transparent 92%);color:inherit}
+:root[data-theme="dark"] .hl,:root:not([data-theme="light"]) .hl{color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:6px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font:800 1.4rem "Bricolage Grotesque",sans-serif;text-decoration:none;letter-spacing:-.03em}
+.logo i{font-style:normal;background:var(--hl);color:#12203B;padding:0 6px;border-radius:5px;margin-right:2px}
+.btn{display:inline-block;background:var(--brand);color:var(--brand-ink);font:600 1rem Figtree,sans-serif;padding:14px 24px;border-radius:12px;border:0;text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.sm{padding:10px 18px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:48px 0 96px}
+.hero p.lead{font-size:1.2rem;color:var(--muted);margin:24px 0 32px;max-width:32rem}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.trust{margin-top:28px;font-size:.95rem;color:var(--muted)}
+.board{background:var(--surface);border:1.5px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 30px 60px -30px rgba(18,32,59,.35)}
+.board h3{margin-bottom:4px}
+.board .sub{color:var(--muted);font-size:.95rem;margin-bottom:20px}
+.mix{display:flex;height:14px;border-radius:99px;overflow:hidden;margin-bottom:18px;background:var(--line)}
+.mix span{transition:width .35s ease}
+.mix .r{background:var(--reach)}.mix .t{background:var(--target)}.mix .s{background:var(--safe)}
+.list{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px}
+.list li{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:10px;font-weight:500;font-size:.98rem}
+.tag{font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:99px;color:#fff}
+.tag.r{background:var(--reach)}.tag.t{background:var(--target);color:var(--brand-ink)}.tag.s{background:var(--safe);color:var(--brand-ink)}
+.board label{display:flex;justify-content:space-between;font-weight:600;font-size:.95rem;margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--brand)}
+.note{margin-top:14px;font-size:.9rem;color:var(--muted)}
+.problem{background:var(--ink);color:var(--bg)}
+.problem .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.problem p{color:inherit;opacity:.8;margin-top:18px;max-width:30rem}
+.compare{display:grid;gap:14px}
+.compare div{border-radius:16px;padding:22px 24px}
+.compare .old{border:1.5px dashed rgba(255,255,255,.35)}
+.compare .new{background:var(--hl);color:#12203B}
+.compare h3{font-size:1.05rem;margin-bottom:6px}
+.compare ul{margin:0;padding-left:1.1rem;font-size:.98rem}
+.head{max-width:36rem;margin-bottom:48px}
+.head p{color:var(--muted);margin-top:14px}
+.feat{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:28px}
+.card p{color:var(--muted);margin-top:10px;font-size:.98rem}
+.f1{grid-column:span 3}.f2{grid-column:span 3}.f3{grid-column:span 2}.f4{grid-column:span 2}.f5{grid-column:span 2}
+.deadlines{list-style:none;margin:18px 0 0;padding:0;font-size:.95rem}
+.deadlines li{display:flex;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.deadlines b{min-width:64px;color:var(--brand)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s;list-style:none;margin:0;padding:0}
+.steps li{counter-increment:s;border-top:3px solid var(--ink);padding-top:18px}
+.steps li::before{content:counter(s);font:800 2rem "Bricolage Grotesque",sans-serif;color:var(--brand)}
+.steps h3{margin:6px 0 8px}
+.steps p{color:var(--muted);font-size:.98rem}
+.human{background:var(--surface);border-block:1.5px solid var(--line)}
+.human .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.human p{color:var(--muted);margin-top:16px}
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.checks li{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+.checks svg{flex:none;margin-top:3px;color:var(--ok)}
+details{border-bottom:1.5px solid var(--line);padding:20px 0}
+summary{cursor:pointer;font:600 1.15rem "Bricolage Grotesque",sans-serif;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.5rem;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);margin-top:12px;max-width:44rem}
+.cta{background:var(--brand);color:var(--brand-ink);text-align:center;border-radius:28px;padding:72px 24px}
+.cta p{margin:16px auto 28px;max-width:30rem;opacity:.9}
+.cta form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cta input[type=email]{flex:1 1 260px;max-width:340px;padding:14px 18px;border-radius:12px;border:0;font:500 1rem Figtree,sans-serif;background:#fff;color:#12203B}
+.cta .btn{background:var(--hl);color:#12203B}
+#msg{margin-top:16px;font-weight:600;min-height:1.6em}
+footer{padding:40px 0 56px;color:var(--muted);font-size:.92rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (max-width:860px){
+ section{padding:64px 0}
+ .hero,.problem .wrap,.human .wrap{grid-template-columns:1fr;gap:36px}
+ .feat{grid-template-columns:1fr}.f1,.f2,.f3,.f4,.f5{grid-column:auto}
+ .steps{grid-template-columns:1fr 1fr}
+ nav .links{display:none}
+}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav>
+  <a class="logo" href="#top"><i>A</i>pplyMate</a>
+  <div class="links" style="display:flex;gap:28px;align-items:center">
+   <a href="#features">Features</a><a href="#how">How it works</a><a href="#faq">FAQ</a>
+   <a class="btn sm" href="#join">Join the waitlist</a>
+  </div>
+ </nav>
+
+ <header class="hero" id="top">
+  <div>
+   <h1>Apply to college with a plan, not <span class="hl">a panic</span>.</h1>
+   <p class="lead">ApplyMate turns your grades, interests and goals into a complete application journey: a balanced shortlist, essay help, document tracking, deadlines and auto-filled forms. AI does the heavy lifting and a human checks the work.</p>
+   <div class="actions">
+    <a class="btn" href="#join">Get early access</a>
+    <a class="btn ghost" href="#how">See how it works</a>
+   </div>
+   <p class="trust">Built for students and families who want expert-level guidance without consultant-level fees.</p>
+  </div>
+
+  <div class="board" aria-labelledby="bt">
+   <h3 id="bt">Your shortlist, balanced</h3>
+   <p class="sub">Drag the slider to see how the mix of colleges changes. (Sample data)</p>
+   <div class="mix" aria-hidden="true"><span class="r" id="mr"></span><span class="t" id="mt"></span><span class="s" id="ms"></span></div>
+   <ul class="list" id="list" aria-live="polite"></ul>
+   <label for="risk"><span>Risk appetite</span><span id="rl">Balanced</span></label>
+   <input type="range" id="risk" min="0" max="2" step="1" value="1">
+   <p class="note">Reach, target and safety schools, chosen from your profile and kept in a healthy ratio.</p>
+  </div>
+ </header>
+</div>
+
+<section class="problem">
+ <div class="wrap">
+  <div>
+   <h2>Applications are scattered. Help is expensive.</h2>
+   <p>Most students juggle spreadsheets, group chats, portals and the same details typed into ten different forms. Private consultants can help, but the cost puts them out of reach for many families.</p>
+  </div>
+  <div class="compare">
+   <div class="old"><h3>The usual way</h3><ul><li>Guesswork on which colleges fit</li><li>Deadlines across many tabs</li><li>Repeating the same form fields</li><li>Guidance that costs a small fortune</li></ul></div>
+   <div class="new"><h3>With ApplyMate</h3><ul><li>One personalised plan, start to finish</li><li>Every deadline and document in one place</li><li>Forms filled from your profile</li><li>Affordable, and verified by real people</li></ul></div>
+  </div>
+ </div>
+</section>
+
+<section id="features">
+ <div class="wrap">
+  <div class="head">
+   <h2>Everything between “I want to apply” and “Submitted”</h2>
+   <p>Five tools that share one profile, so you only tell ApplyMate things once.</p>
+  </div>
+  <div class="feat">
+   <article class="card f1"><h3>Balanced college shortlist</h3><p>Tell us your marks, budget, subjects and preferred countries. We build a list with the right spread of reach, target and safety options, and explain why each one made the cut.</p></article>
+   <article class="card f2"><h3>Essay workspace</h3><p>Brainstorm topics from your own stories, outline, draft and revise. Feedback keeps your voice and flags what an admissions reader would question.</p></article>
+   <article class="card f3"><h3>Document manager</h3><p>Transcripts, recommendation letters, test scores and IDs, each with a status and a reminder for what’s still missing.</p></article>
+   <article class="card f4"><h3>Deadline tracker</h3><p>One timeline for every college and every round.
+    <ul class="deadlines"><li><b>Early</b>Essay draft due</li><li><b>Mid</b>Recommendations requested</li><li><b>Late</b>Submit and pay fee</li></ul></p></article>
+   <article class="card f5"><h3>Form autofill</h3><p>Personal details, activities and academics flow into each application form, so you review instead of retype.</p></article>
+  </div>
+ </div>
+</section>
+
+<section id="how" style="padding-top:0">
+ <div class="wrap">
+  <div class="head"><h2>How it works</h2></div>
+  <ol class="steps">
+   <li><h3>Share your profile</h3><p>Academics, activities, budget and goals. It takes about ten minutes.</p></li>
+   <li><h3>Get your plan</h3><p>A shortlist and a dated roadmap, built around you.</p></li>
+   <li><h3>Work through it</h3><p>Write essays, upload documents and autofill forms with ApplyMate beside you.</p></li>
+   <li><h3>Submit with confidence</h3><p>A human reviewer checks your application before it goes out.</p></li>
+  </ol>
+ </div>
+</section>
+
+<section class="human">
+ <div class="wrap">
+  <div>
+   <h2>AI speed. <span class="hl">Human judgement.</span></h2>
+   <p>AI is fast, but it can be wrong, and an application is too important to leave to a guess. Every plan and application is reviewed by a person before you rely on it.</p>
+  </div>
+  <ul class="checks">
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Shortlists reviewed</b><br>Fit, cost and admission odds sanity-checked.</span></li>
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Details verified</b><br>Requirements and dates confirmed against official sources.</span></li>
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Your words stay yours</b><br>Essay feedback improves your writing. It never replaces it.</span></li>
+  </ul>
+ </div>
+</section>
+
+<section id="faq">
+ <div class="wrap" style="max-width:820px">
+  <div class="head"><h2>Questions, answered</h2></div>
+  <details><summary>Will ApplyMate write my essays for me?</summary><p>No. It helps you find topics, structure your story and tighten your draft, but the writing is yours. Admissions readers can tell, and so can you.</p></details>
+  <details><summary>Who is it for?</summary><p>Students applying to undergraduate or graduate programmes, and the parents helping them, who want structure and expert-level guidance at a fair price.</p></details>
+  <details><summary>How is it more affordable than a consultant?</summary><p>AI handles the repetitive work such as shortlisting, tracking and form filling. Human experts spend their time on review, where they add the most value.</p></details>
+  <details><summary>Is my data safe?</summary><p>Your profile and documents are used only to build your application journey, and you can delete them at any time.</p></details>
+  <details><summary>When can I start?</summary><p>We’re opening to early users in small groups. Join the waitlist and we’ll email you when your spot is ready.</p></details>
+ </div>
+</section>
+
+<div class="wrap" id="join">
+ <div class="cta">
+  <h2>Start your application journey</h2>
+  <p>Join the waitlist for early access and a personalised shortlist when we open.</p>
+  <form id="f" novalidate>
+   <label for="em" style="position:absolute;left:-9999px">Email address</label>
+   <input type="email" id="em" placeholder="you@example.com" autocomplete="email" required>
+   <button class="btn" type="submit">Join the waitlist</button>
+  </form>
+  <div id="msg" role="status"></div>
+ </div>
+ <footer><span class="logo" style="font-size:1.1rem"><i>A</i>pplyMate</span><span>Your AI college-application copilot, verified by humans.</span></footer>
+</div>
+
+<script>
+(function(){
+ var sets=[
+  {label:"Ambitious",mix:[5,3,2]},
+  {label:"Balanced",mix:[3,4,3]},
+  {label:"Cautious",mix:[2,3,5]}
+ ];
+ var names={r:["Lakeview University","Northgate Institute","Crestwood College","Hollis Tech","Marlowe University"],
+            t:["Ashford University","Riverbend College","Summit State","Kingsley Institute","Elmhurst University"],
+            s:["Harbor State","Pinecrest College","Westfield University","Oakmont College","Brookside State"]};
+ var lab={r:"Reach",t:"Target",s:"Safety"};
+ var risk=document.getElementById("risk"),list=document.getElementById("list");
+ function render(){
+  var d=sets[+risk.value],m=d.mix,total=10;
+  document.getElementById("rl").textContent=d.label;
+  document.getElementById("mr").style.width=m[0]*10+"%";
+  document.getElementById("mt").style.width=m[1]*10+"%";
+  document.getElementById("ms").style.width=m[2]*10+"%";
+  var html="";
+  [["r",m[0]],["t",m[1]],["s",m[2]]].forEach(function(p){
+   html+='<li><span>'+p[1]+' '+lab[p[0]].toLowerCase()+' school'+(p[1]>1?'s':'')+', e.g. '+names[p[0]][0]+'</span><span class="tag '+p[0]+'">'+lab[p[0]]+'</span></li>';
+  });
+  list.innerHTML=html;
+ }
+ risk.addEventListener("input",render);render();
+ document.getElementById("f").addEventListener("submit",function(e){
+  e.preventDefault();
+  var v=document.getElementById("em").value.trim(),msg=document.getElementById("msg");
+  if(!/^\S+@\S+\.\S+$/.test(v)){msg.textContent="Enter a valid email address, like you@example.com.";return;}
+  msg.textContent="You’re on the list. We’ll email you when your spot opens.";
+  this.reset();
+ });
+})();
+</script>
+</body>
+</html>
